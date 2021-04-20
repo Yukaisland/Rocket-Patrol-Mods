@@ -45,7 +45,7 @@ class Play extends Phaser.Scene{
         );
                 
 
-        // green UI background
+        // UI background
         this.add.rectangle(
              0, 
              borderUISize + borderPadding,
@@ -85,8 +85,8 @@ class Play extends Phaser.Scene{
         let scoreConfig = {
             fontFamily: 'Courier',
             fontSize: '28px',
-            backgroundColor: '#F3B141',
-            color: '#843605',
+            backgroundColor: '#FF0000',
+            color: '#00FFFF',
             align: 'right',
             padding: {
                 top: 5,
