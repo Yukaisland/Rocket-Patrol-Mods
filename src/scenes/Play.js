@@ -6,7 +6,7 @@ class Play extends Phaser.Scene{
     preload() {
         this.load.image('starfield', './assets/starfield.png');
         this.load.image('rocket', './assets/rocket.png');
-        this.load.image('spaceship','./assets/spaceship.png');
+        this.load.image('spaceship','./assets/spaceship.gif',);
         // load spritesheet
         this.load.spritesheet('explosion', './assets/explosion.png',
          {frameWidth: 80, frameHeight: 80, startFrame: 0, endFrame: 10});
@@ -51,7 +51,7 @@ class Play extends Phaser.Scene{
              borderUISize + borderPadding,
              game.config.width, 
              borderUISize * 2, 
-             0x00FF00
+             0x00FFFF
              ).setOrigin(0, 0);
             
         // white borders
@@ -68,12 +68,14 @@ class Play extends Phaser.Scene{
         keyRIGHT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.RIGHT);
 
 
-        //animation config
+        //explosion animation config 
         this.anims.create({
             key: 'explosion',
             frames:this.anims.generateFrameNumbers('explosion',
             {start:0,end:9, first:0}),
             frameRate:30
+
+
         });
 
         //initialize score
