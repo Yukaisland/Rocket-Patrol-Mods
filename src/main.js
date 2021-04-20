@@ -14,3 +14,6 @@ let borderPadding = borderUISize / 5;
 
 // reserve keyboard vars
 let keyF, keyR, keyLEFT, keyRIGHT;
+
+// reserve an inputPlugin binding
+let mouse;

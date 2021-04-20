@@ -74,7 +74,9 @@ class Play extends Phaser.Scene{
         keyR = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.R);
         keyLEFT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.LEFT);
         keyRIGHT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.RIGHT);
-
+        
+        // define mouse controls
+        mouse = this.input;
 
         //explosion animation config 
         this.anims.create({
