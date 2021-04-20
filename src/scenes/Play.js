@@ -80,11 +80,7 @@ class Play extends Phaser.Scene{
 
         //initialize score
         this.p1Score = 0;
-
-
-
-
-        //----------------------------------------------------------------------
+        
         // add the UI text
         // player score updates during play
         this.p1Score = 0;
@@ -137,9 +133,8 @@ class Play extends Phaser.Scene{
             "Timer: " + this.formatTime(this.clock), // text to display
             clockConfig // text style config object
         );
+
         // add the event to decrement the clock
-        // code adapted from:
-        //  https://phaser.discourse.group/t/countdown-timer/2471/3
         this.timedEvent = this.time.addEvent
         (
             {
@@ -154,22 +149,9 @@ class Play extends Phaser.Scene{
                 loop: true
             }
         );
-//----------------------------------------------------------------------------------
-
-
-
-
-
-
-        this.scoreLeft = this.add.text(
-            borderUISize + borderPadding,
-            borderUISize + borderPadding*2, 
-            this.p1Score, scoreConfig);
-            
 
         // GAME OVER flag
             this.gameOver = false;
-
         // clock set
         scoreConfig.fixedWidth = 0;
         this.clock = this.time.delayedCall(game.settings.gameTimer, () => {
@@ -177,9 +159,6 @@ class Play extends Phaser.Scene{
             this.add.text(game.config.width/2, game.config.height/2 + 64, 'Press (R) to Restart or ← for Menu', scoreConfig).setOrigin(0.5);
             this.gameOver = true;
         }, null, this);
-
-        
-
         
         }
         update() {
@@ -190,9 +169,6 @@ class Play extends Phaser.Scene{
             if (this.gameOver && Phaser.Input.Keyboard.JustDown(keyLEFT)) {
                 this.scene.start("menuScene");
             }
-        
-            
-
 
             this.starfield.tilePositionX -=4;
             if (!this.gameOver) {               
@@ -216,7 +192,6 @@ class Play extends Phaser.Scene{
                 this.shipExplode(this.ship1);
             }
 }
-               
 
                checkCollision(rocket,ship){
                 if(rocket.x < ship.x + ship.width && 
@@ -254,15 +229,13 @@ class Play extends Phaser.Scene{
                     this.scoreLeft.text = "Score: " + this.p1Score;
 
                     this.sound.play('sfx_explosion');
-                    this.sound.play('sfx_explosion1');
-                    this.sound.play('sfx_explosion2');
-                    this.sound.play('sfx_explosion3');
+
                 }
                 formatTime(ms)
                 {
-                    let s = ms/1000;
-                    let min = Math.floor(s/60);
-                    let seconds = s%10;
+                    let sec = ms/1000;
+                    let min = Math.floor(sec/60);
+                    let seconds = sec%60;
                     seconds = seconds.toString().padStart(2, "0");
                     return `${min}:${seconds}`;
                 }
