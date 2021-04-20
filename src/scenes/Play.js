@@ -7,6 +7,7 @@ class Play extends Phaser.Scene{
         this.load.image('starfield', './assets/starfield.png');
         this.load.image('rocket', './assets/rocket.png');
         this.load.image('spaceship','./assets/spaceship.gif',);
+        this.load.image('spaceship fast','./assets/spaceship fast.png',);
         // load spritesheet
         this.load.spritesheet('explosion', './assets/explosion.png',
          {frameWidth: 80, frameHeight: 80, startFrame: 0, endFrame: 10});
@@ -42,6 +43,13 @@ class Play extends Phaser.Scene{
             380,
             300,
             'spaceship'
+        );
+
+        this.ship4 = new ship(
+            this,
+            250,
+            260,
+            'spaceship fast'
         );
                 
 
@@ -80,7 +88,7 @@ class Play extends Phaser.Scene{
 
         //initialize score
         this.p1Score = 0;
-        
+
         // add the UI text
         // player score updates during play
         this.p1Score = 0;
@@ -176,6 +184,7 @@ class Play extends Phaser.Scene{
                 this.ship1.update();           // update spaceships (x3)
                 this.ship2.update();
                 this.ship3.update();
+                this.ship4.update(); // fast ship
             } 
         
             // check collisions
@@ -190,6 +199,10 @@ class Play extends Phaser.Scene{
             if (this.checkCollision(this.p1Rocket, this.ship1)) {
                 this.p1Rocket.reset();
                 this.shipExplode(this.ship1);
+            }
+            if(this.checkCollision(this.p1Rocket, this.ship4)) {
+                this.p1Rocket.reset();
+                this.shipExplode(this.ship4);   
             }
 }
 
