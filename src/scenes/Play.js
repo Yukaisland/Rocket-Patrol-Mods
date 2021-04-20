@@ -81,20 +81,85 @@ class Play extends Phaser.Scene{
         //initialize score
         this.p1Score = 0;
 
-        // display score
-        let scoreConfig = {
-            fontFamily: 'Courier',
-            fontSize: '28px',
-            backgroundColor: '#FF0000',
-            color: '#00FFFF',
-            align: 'right',
-            padding: {
-                top: 5,
-                bottom: 5,
-            },
-            fixedWidth: 100
-            
-        }
+
+
+
+        //----------------------------------------------------------------------
+        // add the UI text
+        // player score updates during play
+        this.p1Score = 0;
+        // high score is saved across games played
+        this.hScore = parseInt(localStorage.getItem("score")) || 0;
+        // scores display configuration
+        let scoreConfig =
+        {
+            fontFamily: "Courier",
+            fontSize: "20px",
+            backgroundColor: "#f3b141",
+            color: "#843605",
+            align: "left",
+            padding: {top: 5, bottom: 5},
+            fixedWidth: 150
+        };
+        this.scoreLeft = this.add.text
+        (
+            50, // x-coord
+            54, // y-coord
+            "Score: " + this.p1Score, // initial text
+            scoreConfig // config settings
+        );
+        this.best = this.add.text
+        (
+            225, // x-coord
+            54, // y coord
+            "Best: " + this.hScore, // initial text
+            scoreConfig // config settings
+        );
+
+        // create a game clock that will countdown until game over
+        this.clock = game.settings.gameTimer;
+        // create an object to populate the text configuration members
+        let clockConfig =
+        {
+            fontFamily: "Courier",
+            fontSize: "20px",
+            backgroundColor: "#f3b141",
+            color: "#843605",
+            align: "left",
+            padding: {top: 5, bottom: 5},
+            fixedWidth: 140
+        };
+        // add the text to the screen
+        this.timeLeft = this.add.text
+        (
+            400, // x-coord
+            54, // y-coord
+            "Timer: " + this.formatTime(this.clock), // text to display
+            clockConfig // text style config object
+        );
+        // add the event to decrement the clock
+        // code adapted from:
+        //  https://phaser.discourse.group/t/countdown-timer/2471/3
+        this.timedEvent = this.time.addEvent
+        (
+            {
+                delay: 1000,
+                callback: () =>
+                {
+                    this.clock -= 1000; 
+                    this.timeLeft.text = "Timer: " +
+                        this.formatTime(this.clock);
+                },
+                scope: this,
+                loop: true
+            }
+        );
+//----------------------------------------------------------------------------------
+
+
+
+
+
 
         this.scoreLeft = this.add.text(
             borderUISize + borderPadding,
@@ -179,11 +244,27 @@ class Play extends Phaser.Scene{
                     this.p1Score += 1;
                     this.scoreLeft.text = this.p1Score;
 
+                    // update the high score
+                    if(this.p1Score > this.hScore)
+                    {
+                        this.hScore = this.p1Score;
+                        localStorage.setItem("score", this.hScore);
+                        this.best.text = "Best: " + this.hScore;
+                    }
+                    this.scoreLeft.text = "Score: " + this.p1Score;
+
                     this.sound.play('sfx_explosion');
                     this.sound.play('sfx_explosion1');
                     this.sound.play('sfx_explosion2');
                     this.sound.play('sfx_explosion3');
                 }
-            
+                formatTime(ms)
+                {
+                    let s = ms/1000;
+                    let min = Math.floor(s/60);
+                    let seconds = s%10;
+                    seconds = seconds.toString().padStart(2, "0");
+                    return `${min}:${seconds}`;
+                }
 
     }
