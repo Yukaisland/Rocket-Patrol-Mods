@@ -47,7 +47,7 @@ class Play extends Phaser.Scene{
 
         this.ship4 = new ship(
             this,
-            250,
+            350,
             260,
             'spaceship fast'
         );
@@ -138,12 +138,12 @@ class Play extends Phaser.Scene{
             clockConfig // text style config object
         );
 
-        // add the event to decrement the clock
+        // add the event to Reduce the clock
         this.timedEvent = this.time.addEvent
         (
             {
                 delay: 1000,
-                callback: () =>
+               callback : () =>
                 {
                     this.clock -= 1000; 
                     this.timeLeft.text = "Timer: " +
@@ -164,6 +164,11 @@ class Play extends Phaser.Scene{
             this.gameOver = true;
         }, null, this);
         
+        //speed increase after 30 seconds
+        this.clock = this.time.delayedCall(game.settings.gameTimer/2, ()=> {
+            game.settings.shipSpeed + 2;
+        }, null, this);
+        
         }
         update() {
             // check key input for restart
@@ -174,13 +179,16 @@ class Play extends Phaser.Scene{
                 this.scene.start("menuScene");
             }
 
+            // when game is over remove the game clock event
+            if(this.gameOver) this.time.removeAllEvents();
+
             this.starfield.tilePositionX -=4;
             if (!this.gameOver) {               
                 this.p1Rocket.update();         // update rocket sprite
-                this.ship1.update();           // update spaceships (x3)
-                this.ship2.update();
-                this.ship3.update();
-                this.ship4.update(); // fast ship
+                this.ship1.update(this.factor);           // update spaceships (x3)
+                this.ship2.update(this.factor);
+                this.ship3.update(this.factor);
+                this.ship4.update(this.factor); // fast ship
             } 
         
             // check collisions
@@ -240,11 +248,12 @@ class Play extends Phaser.Scene{
                     this.sound.play('sfx_explosion');
 
                 }
+
                 formatTime(ms)
                 {
-                    let sec = ms/1000;
-                    let min = Math.floor(sec/60);
-                    let seconds = sec%60;
+                    let s = ms/1000;
+                    let min = Math.floor(s/60);
+                    let seconds = s%60;
                     seconds = seconds.toString().padStart(2, "0");
                     return `${min}:${seconds}`;
                 }
