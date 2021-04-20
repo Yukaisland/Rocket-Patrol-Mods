@@ -50,7 +50,7 @@ class Menu extends Phaser.Scene {
             if (Phaser.Input.Keyboard.JustDown(keyLEFT)) {
               // easy mode
               game.settings = {
-                shipSpeed: 2,
+                shipSpeed: 4,
                 shipfastspeed: 4,
                 gameTimer: 60000    
               }

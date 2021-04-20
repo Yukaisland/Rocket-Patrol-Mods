@@ -6,7 +6,7 @@ class Play extends Phaser.Scene{
     preload() {
         this.load.image('starfield', './assets/starfield.png');
         this.load.image('rocket', './assets/rocket.png');
-        this.load.image('spaceship','./assets/spaceship.gif',);
+        this.load.image('spaceship','./assets/spaceship.png',);
         this.load.image('spaceship fast','./assets/spaceship fast.png',);
         // load spritesheet
         this.load.spritesheet('explosion', './assets/explosion.png',
@@ -87,10 +87,6 @@ class Play extends Phaser.Scene{
         });
 
         //initialize score
-        this.p1Score = 0;
-
-        // add the UI text
-        // player score updates during play
         this.p1Score = 0;
         // high score is saved across games played
         this.hScore = parseInt(localStorage.getItem("score")) || 0;
