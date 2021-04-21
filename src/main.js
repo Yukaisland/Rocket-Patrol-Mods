@@ -4,6 +4,11 @@ Rocket Patrol Mods(Attack on UFO)
 4/20/2021
 Working hours: In 3 days
 -----------------------------------------------------------------------
+Credit: Background:https://hdwallpaperim.com/space-pixel-art-horizon-stars/
+        Explosive: purchased
+        Other things else, made by my own
+        I also get help from my teammate Kyle Worcester-Moore, and TAs
+-----------------------------------------------------------------------
 Points breakdown
 Create new artwork for all of the in-game assets (rocket, spaceships, explosion) (20)
 Create a new scrolling tile sprite for the background (5)
