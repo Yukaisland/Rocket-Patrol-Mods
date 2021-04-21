@@ -6,11 +6,13 @@ class Play extends Phaser.Scene{
     preload() {
         this.load.image('starfield', './assets/starfield.png');
         this.load.image('rocket', './assets/rocket.png');
-        this.load.image('spaceship','./assets/spaceship.png',);
         this.load.image('spaceship fast','./assets/spaceship fast.png',);
         // load spritesheet
+        this.load.spritesheet('spaceship','./assets/spaceship.png',
+        {frameWidth: 63, frameHeight: 46, startFrame: 0, endFrame: 4});
         this.load.spritesheet('explosion', './assets/explosion.png',
-         {frameWidth: 80, frameHeight: 80, startFrame: 0, endFrame: 10});
+         {frameWidth: 50, frameHeight: 50, startFrame: 0, endFrame: 6});
+
     }
 
     create() {
@@ -47,7 +49,7 @@ class Play extends Phaser.Scene{
 
         this.ship4 = new ship(
             this,
-            350,
+            150,
             260,
             'spaceship fast'
         );
@@ -78,15 +80,24 @@ class Play extends Phaser.Scene{
         // define mouse controls
         mouse = this.input;
 
-        //explosion animation config 
+        //explosion animation
         this.anims.create({
             key: 'explosion',
             frames:this.anims.generateFrameNumbers('explosion',
-            {start:0,end:9, first:0}),
+            {start:0,end:6, first:0}),
             frameRate:30
-
-
         });
+
+        //spaceship aimation 
+        this.anims.create({
+            key: 'spaceship',
+            frames:this.anims.generateFrameNumbers('spaceship',
+            {start:0,end:3, first:0}),
+            frameRate:20,
+            repeat: -1
+        });
+
+
 
         //initialize score
         this.p1Score = 0;
@@ -140,12 +151,24 @@ class Play extends Phaser.Scene{
             clockConfig // text style config object
         );
 
+
+        // GAME OVER flag
+            this.gameOver = false;
+        // clock set
+        scoreConfig.fixedWidth = 0;
+        this.clock = this.time.delayedCall
+        (game.settings.gameTimer, () => {
+            this.add.text(game.config.width/2, game.config.height/2, 'GAME OVER', scoreConfig).setOrigin(0.5);
+            this.add.text(game.config.width/2, game.config.height/2 + 64, 'Press (R) to Restart or ← for Menu', scoreConfig).setOrigin(0.5);
+            this.gameOver = true;
+        }, null, this);
+        
         // add the event to Reduce the clock
         this.timedEvent = this.time.addEvent
         (
             {
                 delay: 1000,
-               callback : () =>
+                callback : () =>
                 {
                     this.clock -= 1000; 
                     this.timeLeft.text = "Timer: " +
@@ -156,20 +179,19 @@ class Play extends Phaser.Scene{
             }
         );
 
-        // GAME OVER flag
-            this.gameOver = false;
-        // clock set
-        scoreConfig.fixedWidth = 0;
-        this.clock = this.time.delayedCall(game.settings.gameTimer, () => {
-            this.add.text(game.config.width/2, game.config.height/2, 'GAME OVER', scoreConfig).setOrigin(0.5);
-            this.add.text(game.config.width/2, game.config.height/2 + 64, 'Press (R) to Restart or ← for Menu', scoreConfig).setOrigin(0.5);
-            this.gameOver = true;
-        }, null, this);
-        
-        //speed increase after 30 seconds
-        this.clock = this.time.delayedCall(game.settings.gameTimer/2, ()=> {
-            game.settings.shipSpeed + 2;
-        }, null, this);
+        // set a timer to change the value of ship speed after
+        // half of the game time has elapsed
+        this.factor = 1;
+        this.shipSpeed = this.time.delayedCall
+        (
+            game.settings.gameTimer/2,
+            () =>
+            {
+                this.factor = 10;
+            },
+            null,
+            this
+        );
         
         }
         update() {

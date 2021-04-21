@@ -3,10 +3,12 @@ class ship extends Phaser.GameObjects.Sprite {
         super(scene, x, y, texture, frame);
         scene.add.existing(this);   // add to existing scene
         this.shipSpeed = game.settings.shipSpeed;         // pixels per frame
+        this.anims.play('spaceship');
 
     }   
 
-    update() {
+    update() 
+    {       
         this.x -= this.shipSpeed;
 
         if(this.x < -this.width){
