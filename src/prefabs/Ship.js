@@ -7,13 +7,13 @@ class ship extends Phaser.GameObjects.Sprite {
 
     }   
 
-    update() 
-    {       
-        this.x -= this.shipSpeed;
+    update(speed) 
+    {
+        // move spaceship left
+        this.x -= (speed * game.settings.shipSpeed);
 
-        if(this.x < -this.width){
-            this.x = game.config.width;
-        }
+        // wraparound from left to right edge
+        if(this.x <= 0 - this.width) this.x = game.config.width; 
     }
 
     reset() {
