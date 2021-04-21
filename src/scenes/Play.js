@@ -13,7 +13,8 @@ class Play extends Phaser.Scene{
         this.load.spritesheet('explosion', './assets/explosion.png',
          {frameWidth: 50, frameHeight: 50, startFrame: 0, endFrame: 6});
 
-    }
+    };
+
     // FORMAT TIME
     formatTime(ms)
     {

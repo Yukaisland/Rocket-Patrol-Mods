@@ -38,19 +38,19 @@ class Menu extends Phaser.Scene {
           let centerX = game.config.width/2;
           let centerY = game.config.height/2;
           let textSpacer = 64;
-          this.add.text(centerX, centerY - textSpacer, 'ROCKET PATROL', menuConfig).setOrigin(0.5);
+          this.add.text(centerX, centerY - textSpacer, 'Attack on UFO', menuConfig).setOrigin(0.5);//
           //--------------
           menuConfig.backgroundColor = '#FF9900';
           menuConfig.color = '#000';
-          this.add.text(centerX, centerY, 'Use <--> arrows to move and F to Fire', menuConfig).setOrigin(0.5);
+          this.add.text(centerX, centerY, 'Press ← for Easy or → for Hard', menuConfig).setOrigin(0.5);
           //-------------
           menuConfig.backgroundColor = '#00FF00';
           menuConfig.color = '#000';
-          this.add.text(centerX, centerY + textSpacer, 'Or Move with mouse and LEFT Click to fire', menuConfig).setOrigin(0.5);
+          this.add.text(centerX, centerY + textSpacer, 'Use <--> arrows to move and F to fire', menuConfig).setOrigin(0.5);
           //-------------
           menuConfig.backgroundColor = '#3DBAFF';
-          menuConfig.color = "#FFF";
-          this.add.text(centerX, centerY + (2 * textSpacer), 'Press ← for Easy or → for Hard', menuConfig).setOrigin(0.5);
+          menuConfig.color = "#000";
+          this.add.text(centerX, centerY + (2 * textSpacer), 'Or Move with mouse and LEFT Click to fire', menuConfig).setOrigin(0.5);
 
         // define keys
         keyLEFT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.LEFT);
@@ -62,7 +62,7 @@ class Menu extends Phaser.Scene {
               // easy mode
               game.settings = {
                 shipSpeed: 2,
-                gameTimer: 6000    
+                gameTimer: 60000    
               }
               this.sound.play('sfx_select');
               this.scene.start('playScene');    
@@ -71,7 +71,7 @@ class Menu extends Phaser.Scene {
               // hard mode
               game.settings = {
                 shipSpeed: 4,
-                gameTimer: 4000    
+                gameTimer: 45000    
               }
               this.sound.play('sfx_select');
               this.scene.start('playScene');    
