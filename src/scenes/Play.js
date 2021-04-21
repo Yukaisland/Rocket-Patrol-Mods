@@ -180,7 +180,7 @@ class Play extends Phaser.Scene{
             this.gameOver = false;
         // clock set
         scoreConfig.fixedWidth = 0;
-        this.clock = this.time.delayedCall
+        this.time.delayedCall
         (game.settings.gameTimer, () => {
             this.add.text(game.config.width/2, game.config.height/2, 'GAME OVER', scoreConfig).setOrigin(0.5);
             this.add.text(game.config.width/2, game.config.height/2 + 64, 'Press (R) to Restart or ← for Menu', scoreConfig).setOrigin(0.5);
@@ -242,7 +242,6 @@ class Play extends Phaser.Scene{
                 this.shipExplode(this.ship4);   
             }
 }
-
 
                checkCollision(rocket,ship){
                 if(rocket.x < ship.x + ship.width && 
